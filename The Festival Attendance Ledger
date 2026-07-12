@@ -1,0 +1,61 @@
+import java.util.*;
+import java.util.HashMap;
+
+public class Main {
+    public static Pair<Integer, Integer> findMostFrequent(List<Integer> visitorIDs) {
+        // User logic goes here
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int id:visitorIDs){
+            map.put(id,map.getOrDefault(id,0)+1);
+        }
+
+        int maxfreq = 0;
+        int answer = Integer.MAX_VALUE;
+        
+        for(int key :map.keySet()){
+            int freq = map.get(key);
+
+            if(freq>maxfreq){
+                maxfreq = freq;
+                answer = key;
+            }
+            else if(freq == maxfreq && key<answer){
+                answer = key;
+            }
+        }
+        // Return a pair of integers: the most frequent Visitor ID and its frequency
+        return new Pair<>(answer, maxfreq); // Placeholder return
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        List<Integer> visitorIDs = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            visitorIDs.add(scanner.nextInt());
+        }
+        
+        Pair<Integer, Integer> result = findMostFrequent(visitorIDs);
+        System.out.println(result.getKey() + " " + result.getValue());
+    }
+
+    public static class Pair<K, V> {
+        private final K key;
+        private final V value;
+
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+    }
+}
