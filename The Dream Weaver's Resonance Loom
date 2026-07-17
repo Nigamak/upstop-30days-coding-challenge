@@ -1,0 +1,37 @@
+import java.util.Scanner;
+public class Main {
+    public static int user_logic(int[] dimensions, int n) {
+        int[][] dp = new int[n + 1][n + 1];
+        // len = number of matrices in the current chain
+        for (int len = 2; len <= n; len++) {
+            for (int i = 1; i <= n - len + 1; i++) {
+                int j = i + len - 1;
+                dp[i][j] = Integer.MAX_VALUE;
+
+                for (int k = i; k < j; k++) {
+
+                    int cost = dp[i][k]
+                             + dp[k + 1][j]
+                             + dimensions[i - 1] * dimensions[k] * dimensions[j];
+
+                    dp[i][j] = Math.min(dp[i][j], cost);
+                }
+            }
+        }
+        return dp[1][n];
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int n = scanner.nextInt();
+
+        int[] dimensions = new int[n + 1];
+
+        for (int i = 0; i < n + 1; i++) {
+            dimensions[i] = scanner.nextInt();
+        }
+
+        int result = user_logic(dimensions, n);
+        System.out.println(result);
+    }
+}
